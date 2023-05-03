@@ -1,6 +1,8 @@
 from flask import Flask
+from flask_cors import CORS
 
 app_server = Flask(__name__)
+CORS(app_server)
 
 from app.controllers import home_blueprint, login_blueprint
 
