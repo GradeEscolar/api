@@ -1,0 +1,5 @@
+[mysql]
+user = user
+password = password
+host = host
+database = database
