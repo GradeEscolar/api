@@ -1,6 +1,6 @@
 import json
-from app.data_access.models.usuario import Usuario
-from app.data_access import session_maker, mysql_config
+from grade_escolar.data_access.models.usuario import Usuario
+from grade_escolar.data_access import session_maker, mysql_config
 import mysql.connector
 
 class UsuarioRepository:

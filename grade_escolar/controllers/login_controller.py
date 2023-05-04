@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from sqlalchemy.orm import Session
-from app.services.login_service import LoginService
+from grade_escolar.services.login_service import LoginService
 
 # encoding: utf-8
 

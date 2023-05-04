@@ -1,6 +1,6 @@
 from flask import jsonify
 from sqlalchemy.orm import Session
-from app.data_access.repositories.usuario_repository import UsuarioRepository
+from grade_escolar.data_access.repositories.usuario_repository import UsuarioRepository
 
 class LoginService:
     

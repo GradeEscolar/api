@@ -4,7 +4,7 @@ from flask_cors import CORS
 app_server = Flask(__name__)
 CORS(app_server)
 
-from app.controllers import home_blueprint, login_blueprint
+from grade_escolar.controllers import home_blueprint, login_blueprint
 
 blueprints = [
     home_blueprint,
