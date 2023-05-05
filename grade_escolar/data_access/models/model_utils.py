@@ -5,5 +5,6 @@ def usuario_to_dict(usuario: Usuario):
         'id': usuario.id,
         'nome': usuario.nome,
         'email': usuario.email,
-        'senha': usuario.senha
+        'senha': usuario.senha,
+        'data_cadastro': usuario.data_cadastro
     }
