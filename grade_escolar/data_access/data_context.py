@@ -35,13 +35,11 @@ class Usuario(BaseModel):
     nome = Column(String(30), nullable=False)
     email = Column(String(50), unique=True, nullable=False)
     senha = Column(String(10), nullable=False)
-    data_cadastro = Column(DateTime(True), server_default=func.now(), server_onupdate=func.now(), nullable=False)
-    
-    __table_args__ = (CheckConstraint(r"data_cadastro REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'"),)
-    
+    data_cadastro = Column(DateTime(True), nullable=False)
+        
     def __repr__(self):
         return f'Usuario(id={self.id}, nome={self.nome}, email={self.email}, senha=***)'
 
-BaseModel.metadata.drop_all(engine)
+#BaseModel.metadata.drop_all(engine)
 BaseModel.metadata.create_all(engine)
 
