@@ -1,4 +1,4 @@
-from grade_escolar import app_server
+from grade_escolar import app_server as application
 
 if __name__ == '__main__':
-    app_server.run(host="0.0.0.0", debug=False)
+    application.run(host="0.0.0.0", debug=False)
