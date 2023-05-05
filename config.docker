@@ -1,0 +1,8 @@
+[mysql]
+env = mysql_docker
+
+[mysql_docker]
+user = userdb
+password = gedb
+host = ge-db
+database = gedb

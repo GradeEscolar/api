@@ -1,0 +1,20 @@
+[mysql]
+env = mysql_dev
+
+[mysql_prd]
+user = user
+password = password
+host = host
+database = database
+
+[mysql_dev]
+user = user
+password = password
+host = host
+database = database
+
+[mysql_docker]
+user = user
+password = password
+host = host
+database = database
