@@ -1,20 +1,19 @@
-import json
-from grade_escolar.data_access.models.usuario import Usuario
-from grade_escolar.data_access import session_maker, mysql_config
-import mysql.connector
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+from mysql import connector
+from grade_escolar.data_access import engine, mysql_config
+from grade_escolar.data_access.models import Usuario, usuario_to_dict
 
 class UsuarioRepository:
         
-    def listar_sqlalchemy(self):
-        session = session_maker()
-        usuarios_db =  session.query(Usuario).all() #[{'a': 1}]
-        session.close()
-        usuarios = [usuario_db.as_dict for usuario_db in usuarios_db]    
-        print(usuarios)
-        return usuarios
+    def listar(self):
+        with Session(engine) as session:
+            usuarios = session.query(Usuario).all()
+            usuarios_dict = [usuario_to_dict(usuario) for usuario in usuarios]
+            return usuarios_dict
     
     def listar_mysql_connector(self):
-        with mysql.connector.connect(**mysql_config) as conn:
+        with connector.connect(**mysql_config) as conn:
             with conn.cursor(dictionary=True) as cr:
                 query = 'select * from usuarios'
                 cr.execute(query)

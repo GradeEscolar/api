@@ -8,5 +8,5 @@ class LoginService:
         self.usuario_repository = UsuarioRepository()
         
     def usuarios(self):
-        usuarios = self.usuario_repository.listar_sqlalchemy()
+        usuarios = self.usuario_repository.listar()
         return jsonify(usuarios)

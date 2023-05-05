@@ -1,10 +1,7 @@
-[mysqlprd]
-user = gersonmsj
-password = pwmsqlg05
-host = gersonmsj.mysql.pythonanywhere-services.com
-database = gersonmsj$default
-
 [mysql]
+env = mysql_docker
+
+[mysql_docker]
 user = userdb
 password = gedb
 host = ge-db
