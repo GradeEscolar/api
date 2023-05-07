@@ -16,5 +16,16 @@ def get():
 @controller.post("/")
 def post():
     data = request.get_json()
-    service.create(data)
-    return jsonify(success=True)
+    status_code = 200
+    result = {
+        'success': True,
+        'message': None
+    }
+    if not(service.create(data)):
+        result['success'] = False
+        result['message'] = 'O e-mail informado já está em uso.'
+        status_code = 409
+    
+    response = jsonify(result)
+    response.status_code = status_code
+    return response

@@ -10,9 +10,21 @@ class UsuarioService:
         self.usuario_repository = UsuarioRepository()
 
     def create(self, data):
-        usuario = dict_to_class(Usuario(), data)
-        usuario.data_cadastro = datetime.now()
-        self.usuario_repository.create(usuario)
+        usuario = Usuario()
+        usuario.from_dict(data)
+        usuario.set_data_cadastro()
+        return self.usuario_repository.create(usuario)
         
     def read(self):
-        return self.usuario_repository.listar()
+        usuarios = self.usuario_repository.listar()
+        usuario = usuarios[0]
+        d = {}
+        for k in vars(usuario).items():
+            if k[0] != '_sa_instance_state':
+                d[k[0]] = k[1]
+                
+        print(d)
+                
+        
+        #data = [usuario.to_dict() for usuario in usuarios]
+        return d
