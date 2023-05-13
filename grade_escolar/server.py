@@ -5,7 +5,7 @@ from flask_cors import CORS
 os.environ['TZ'] = 'America/Sao_Paulo'
 
 app_server = Flask(__name__)
-CORS(app_server)
+CORS(app_server, headers='Content-Type')
 
 from grade_escolar.controllers import home_controller, usuario_controller
 
@@ -16,6 +16,8 @@ controllers = [
         
 for controller in controllers:
     app_server.register_blueprint(controller)
+
+
 
 def get_server():
     return app_server

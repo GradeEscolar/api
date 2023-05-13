@@ -17,14 +17,5 @@ class UsuarioService:
         
     def read(self):
         usuarios = self.usuario_repository.listar()
-        usuario = usuarios[0]
-        d = {}
-        for k in vars(usuario).items():
-            if k[0] != '_sa_instance_state':
-                d[k[0]] = k[1]
-                
-        print(d)
-                
-        
-        #data = [usuario.to_dict() for usuario in usuarios]
-        return d
+        data = [usuario.to_dict() for usuario in usuarios]
+        return data

@@ -28,10 +28,11 @@ mysql_config = {
 T = TypeVar("T")
 
 def to_dict(obj:T) -> dict[str, Any]:
-    dic = dict[str, Any]()
-    for key in vars(obj).items():
-        dic[key] = getattr(obj, key, None)
-    return dic
+  dic = dict[str, Any]()
+  for key in vars(obj).items():
+    if key[0] != '_sa_instance_state':
+      dic[key[0]] = key[1]
+  return dic  
         
 def from_dict(obj:T, dic:dict[str, Any]) -> None:
     for key in dic:
