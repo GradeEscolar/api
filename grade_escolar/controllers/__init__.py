@@ -1,2 +1,2 @@
-from .home_controller import blueprint as home_blueprint
-from .login_controller import blueprint as login_blueprint
+from .home_controller import controller as home_controller
+from .usuario_controller import controller as usuario_controller
