@@ -1,9 +1,9 @@
 import datetime
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, subqueryload
 from sqlalchemy import Exists, select
 from mysql import connector
 from grade_escolar.data_access import engine, mysql_config
-from grade_escolar.data_access.models import Usuario, usuario_to_dict
+from grade_escolar.data_access.models import Usuario
 
 class UsuarioRepository:
     
@@ -22,6 +22,10 @@ class UsuarioRepository:
     def listar(self):
         with Session(engine) as session:
             return session.query(Usuario).all()
+        
+    def obter_login(self, usuario: Usuario):
+        with Session(engine) as session:
+            return session.query(Usuario).filter(Usuario.email == usuario.email).first()
             
     def listar_mysql_connector(self):
         with connector.connect(**mysql_config) as conn:

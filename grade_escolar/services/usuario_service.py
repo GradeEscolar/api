@@ -1,8 +1,7 @@
-from datetime import datetime
-from flask import jsonify
-from sqlalchemy.orm import Session
+from datetime import datetime, timedelta
+import bcrypt
 from grade_escolar.data_access.repositories.usuario_repository import UsuarioRepository
-from grade_escolar.data_access.models import Usuario, dict_to_class
+from grade_escolar.data_access.models import Usuario
 
 class UsuarioService:
     
@@ -12,7 +11,8 @@ class UsuarioService:
     def create(self, data):
         usuario = Usuario()
         usuario.from_dict(data)
-        usuario.set_data_cadastro()
+        usuario.data_cadastro = datetime.utcnow() - timedelta(hours=3)
+        usuario.senha = bcrypt.hashpw(str(usuario.senha).encode(), bcrypt.gensalt())
         return self.usuario_repository.create(usuario)
         
     def read(self):
