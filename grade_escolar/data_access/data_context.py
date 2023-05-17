@@ -78,7 +78,6 @@ class Grade(BaseModel):
   
   id = Column(Integer,  primary_key=True, autoincrement=True)
   id_usuario = Column(Integer, ForeignKey(Usuario.id))
-  nome = Column(String(50), nullable=False)
   aulas = Column(Integer, nullable=False)
   dias = Column(String(14), nullable=False)
   

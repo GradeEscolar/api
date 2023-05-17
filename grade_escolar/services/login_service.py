@@ -1,8 +1,8 @@
 from datetime import timedelta
 import bcrypt
 from flask_jwt_extended import create_access_token
-from grade_escolar.data_access.repositories import UsuarioRepository
-from grade_escolar.data_access.models import Usuario
+from grade_escolar.repositories import UsuarioRepository
+from grade_escolar.models import Usuario
 
 class LoginService:
 

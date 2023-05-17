@@ -9,4 +9,4 @@ host = ge-db
 database = gedb
 
 [jwt]
-jwt_secret = secret
+jwt_secret = D9jXbuV9C2FRPE78nCHOptBLv7chGNDA7jTPSFDSrMFhXPGVJ4eNCiNg7Z0n2wu

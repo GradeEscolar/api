@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session, subqueryload
 from sqlalchemy import Exists, select
 from mysql import connector
 from grade_escolar.data_access import engine, mysql_config
-from grade_escolar.data_access.models import Usuario
+from grade_escolar.models import Usuario
 
 class UsuarioRepository:
     

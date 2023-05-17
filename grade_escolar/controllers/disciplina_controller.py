@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from grade_escolar.services import DisciplinaService
-from .controllers import create_response
+from .controllers_util import create_response
 
 controller = Blueprint('disciplina_controller', __name__, url_prefix='/disciplina')
 

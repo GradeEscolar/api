@@ -1,10 +1,6 @@
-import datetime
 from sqlalchemy.orm import Session
-from sqlalchemy import Exists, select
-from mysql import connector
-from grade_escolar.data_access import engine, mysql_config
-from grade_escolar.data_access.models import Disciplina
-
+from grade_escolar.data_access import engine
+from grade_escolar.models import Disciplina
 
 class DisciplinaRepository:
 

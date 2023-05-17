@@ -1,5 +1,5 @@
-from grade_escolar.data_access.repositories.disciplina_repository import DisciplinaRepository
-from grade_escolar.data_access.models import Disciplina
+from grade_escolar.repositories import DisciplinaRepository
+from grade_escolar.models import Disciplina
 
 class DisciplinaService:
     
