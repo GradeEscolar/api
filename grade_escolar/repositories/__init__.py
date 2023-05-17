@@ -1,0 +1,3 @@
+from .usuario_repository import UsuarioRepository
+from .disciplina_repository import DisciplinaRepository
+from .grade_repository import GradeRepository

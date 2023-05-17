@@ -1,9 +1,6 @@
-import json
-from flask import Blueprint, make_response, request, jsonify
-from flask_cors import cross_origin
-from sqlalchemy.orm import Session
+from flask import Blueprint, request, jsonify
 from grade_escolar.services import UsuarioService
-from grade_escolar.data_access.models import Usuario, dict_to_class
+from .controllers_util import create_response
 
 # encoding: utf-8
 
@@ -17,16 +14,4 @@ def get():
 @controller.post('')
 def post():
     data = request.get_json()
-    status_code = 200
-    result = {
-        'success': True,
-        'message': None
-    }
-    if not(service.create(data)):
-        result['success'] = False
-        result['message'] = 'O e-mail informado já está em uso.'
-        status_code = 409
-    
-    response = jsonify(result)
-    response.status_code = status_code
-    return response
+    return create_response() if service.create(data) else create_response(409, 'O e-mail informado já está em uso.')

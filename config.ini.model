@@ -1,5 +1,6 @@
 [mysql]
 env = mysql_dev
+reset = n
 
 [mysql_prd]
 user = user
@@ -18,3 +19,6 @@ user = user
 password = password
 host = host
 database = database
+
+[jwt]
+jwt_secret = jwt_secret
