@@ -8,9 +8,9 @@ controller = Blueprint('anotacao_controller', __name__, url_prefix='/anotacao')
 service = AnotacaoService()
 
 
-@controller.get('')
+@controller.post('')
 @jwt_required()
-def get():
+def post():
     data = request.get_json()
     return jsonify(service.read(data))
 
