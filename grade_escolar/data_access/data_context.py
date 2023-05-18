@@ -82,7 +82,7 @@ class Grade(BaseModel):
   dias = Column(String(14), nullable=False)
   
   _usuario = relationship('Usuario', back_populates='_grade', lazy='select')
-  _aulas = relationship("Aulas", back_populates='_grade', uselist=True, lazy='select')
+  _aulas = relationship("Aula", back_populates='_grade', uselist=True, lazy='select')
   
   to_dict = lambda self: to_dict(self)
   from_dict = lambda self, dict: from_dict(self, dict)
@@ -99,7 +99,7 @@ class Disciplina(BaseModel):
   
   _usuario = relationship('Usuario', back_populates='_disciplinas', lazy='select')
   _anotacoes = relationship("Anotacao", back_populates='_disciplina', uselist=True, lazy='select')
-  _aulas = relationship("Aulas", back_populates='_disciplina', uselist=True, lazy='select')
+  _aulas = relationship("Aula", back_populates='_disciplina', uselist=True, lazy='select')
   
   to_dict = lambda self: to_dict(self)
   from_dict = lambda self, dict: from_dict(self, dict)
@@ -124,7 +124,7 @@ class Anotacao(BaseModel):
   def __repr__(self) -> str:
     return self.to_str()
 
-class Aulas(BaseModel):
+class Aula(BaseModel):
   __tablename__ = 'aulas'
   
   id = Column(Integer,  primary_key=True, autoincrement=True)
@@ -144,8 +144,8 @@ class Aulas(BaseModel):
 
 disciplinas_uidx_usuario_disciplina = Index('disciplinas_uidx_usuario_disciplina', Disciplina.id_usuario, Disciplina.disciplina, unique=True)
 anotacao_uidx_disciplina_aula_data = Index('anotacao_uidx_disciplina_aula_data', Anotacao.id_disciplina, Anotacao.aula, Anotacao.data, unique=True)
-aulas_uidx_grade_aula_dia = Index('aulas_uidx_grade_aula_dia', Aulas.id_grade, Aulas.aula, Aulas.dia, unique=True)
-aulas_idx_grade_dia = Index('aulas_idx_grade_dia', Aulas.id_grade, Aulas.dia, unique=False)
+aulas_uidx_grade_aula_dia = Index('aulas_uidx_grade_aula_dia', Aula.id_grade, Aula.aula, Aula.dia, unique=True)
+aulas_idx_grade_dia = Index('aulas_idx_grade_dia', Aula.id_grade, Aula.dia, unique=False)
 
 if mysql_reset == 's':
   BaseModel.metadata.drop_all(engine)

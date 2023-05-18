@@ -6,8 +6,8 @@ from grade_escolar.services import LoginService
 controller = Blueprint('login_controller', __name__, url_prefix='/login')
 service = LoginService()
 
-@controller.post('')
-def post():
+@controller.get('')
+def get():
     data = request.get_json()
     
     status_code = 401

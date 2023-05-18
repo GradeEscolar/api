@@ -40,5 +40,6 @@ class DisciplinaRepository:
     def delete(self, id: int):
         with Session(engine) as session:
             disciplina = session.get(Disciplina, id)
-            session.delete(disciplina)
-            session.commit()
+            if disciplina:
+                session.delete(disciplina)
+                session.commit()

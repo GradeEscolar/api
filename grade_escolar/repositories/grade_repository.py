@@ -8,16 +8,16 @@ class GradeRepository:
         with Session(engine) as session:
             return session.query(Grade).filter(Grade.id_usuario == id_usuario).first()
         
-    def exists_id(self, id_usuario: int, id: int):
+    def exists(self, id_usuario: int, id: int):
         with Session(engine) as session:
             query = session.query(Grade).filter(
                 Grade.id_usuario == id_usuario, Grade.id == id
             )
-            return session.query(query.exists()).scalar()
+            return True if session.query(query.exists()).scalar() else False
 
-    def update(self, id: int, grade: Grade):
+    def update(self, grade: Grade):
         with Session(engine) as session:
-            d = session.get(Grade, id)
+            d = session.get(Grade, grade.id)
             d.aulas = grade.aulas
             d.dias = grade.dias
             session.commit()

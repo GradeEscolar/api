@@ -5,3 +5,16 @@ class GradeService:
     
     def __init__(self):
         self.repository = GradeRepository()
+        
+    def read(self, id_usuario:int):
+        grade = self.repository.read(id_usuario)
+        return grade.to_dict()
+    
+    def update(self, id_usuario:int, data):
+        grade = Grade()
+        grade.from_dict(data)
+        if self.repository.exists(id_usuario, grade.id):
+            self.repository.update(grade)
+            return True
+        return False
+        
