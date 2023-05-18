@@ -7,7 +7,8 @@ class DisciplinaRepository:
     def create(self, disciplina: Disciplina):
         with Session(engine) as session:
             query = session.query(Disciplina).filter(
-                Disciplina.id_usuario == disciplina.id_usuario, Disciplina.disciplina == disciplina.disciplina)
+                Disciplina.id_usuario == disciplina.id_usuario, Disciplina.disciplina == disciplina.disciplina
+            )
             exists = session.query(query.exists()).scalar()
             if (not (exists)):
                 session.add(disciplina)
