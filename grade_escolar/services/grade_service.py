@@ -15,6 +15,7 @@ class GradeService:
         grade.from_dict(data)
         if self.repository.exists(id_usuario, grade.id):
             self.repository.update(grade)
+            
             return True
         return False
         

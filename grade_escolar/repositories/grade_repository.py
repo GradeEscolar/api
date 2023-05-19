@@ -1,6 +1,7 @@
-from sqlalchemy.orm import Session
+from typing import Optional
+from sqlalchemy.orm import Session, joinedload
 from grade_escolar.data_access import engine
-from grade_escolar.models import Grade
+from grade_escolar.models import Grade, Aula
 
 class GradeRepository:
     
@@ -18,6 +19,11 @@ class GradeRepository:
     def update(self, grade: Grade):
         with Session(engine) as session:
             d = session.get(Grade, grade.id)
-            d.aulas = grade.aulas
-            d.dias = grade.dias
-            session.commit()
+            if d:      
+                d.aulas = grade.aulas
+                d.dias = grade.dias
+                aulas = [aula for aula in d._aulas if aula.aula > grade.aulas or grade.dias.find(str(aula.dia)) == -1]
+                for aula in aulas:
+                    session.delete(aula)
+                    
+                session.commit()

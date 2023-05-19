@@ -1,7 +1,8 @@
 from configparser import ConfigParser
-from sqlalchemy import Column, Index, Integer, String, DateTime, Text, UniqueConstraint, create_engine, ForeignKey
-from sqlalchemy.orm import DeclarativeBase, relationship
-from typing import TypeVar, Any
+from datetime import datetime
+from sqlalchemy import Index, Integer, String, DateTime, Text, create_engine, ForeignKey
+from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
+from typing import List, TypeVar, Any
     
 config = ConfigParser()
 config.read('config.ini')
@@ -58,14 +59,14 @@ class BaseModel(DeclarativeBase):
 class Usuario(BaseModel):
   __tablename__ = 'usuarios'
   
-  id = Column(Integer, primary_key=True, autoincrement=True)
-  nome = Column(String(30), nullable=False)
-  email = Column(String(50), unique=True, nullable=False)
-  senha = Column(String(60), nullable=False)
-  data_cadastro = Column(DateTime(True), nullable=False)
+  id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+  nome: Mapped[str] = mapped_column(String(30), nullable=False)
+  email: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
+  senha: Mapped[str] = mapped_column(String(60), nullable=False)
+  data_cadastro: Mapped[datetime] = mapped_column(DateTime(True), nullable=False)
   
-  _grade = relationship("Grade", back_populates='_usuario', uselist=False, lazy='select')
-  _disciplinas = relationship("Disciplina", back_populates='_usuario', uselist=True, lazy='select')
+  _grade: Mapped['Grade'] = relationship("Grade", back_populates='_usuario', uselist=False, lazy='select', cascade='all, delete-orphan')
+  _disciplinas: Mapped[List['Disciplina']] = relationship("Disciplina", back_populates='_usuario', uselist=True, lazy='select', cascade='all, delete-orphan')
   
   to_dict = lambda self: to_dict(self)
   from_dict = lambda self, dict: from_dict(self, dict)
@@ -76,13 +77,13 @@ class Usuario(BaseModel):
 class Grade(BaseModel):
   __tablename__ = 'grade'
   
-  id = Column(Integer,  primary_key=True, autoincrement=True)
-  id_usuario = Column(Integer, ForeignKey(Usuario.id, ondelete='CASCADE'), nullable=False)
-  aulas = Column(Integer, nullable=False)
-  dias = Column(String(14), nullable=False)
+  id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+  id_usuario: Mapped[int] = mapped_column(Integer, ForeignKey(Usuario.id, ondelete='CASCADE'), nullable=False)
+  aulas: Mapped[int] = mapped_column(Integer, nullable=False)
+  dias: Mapped[str] = mapped_column(String(14), nullable=False)
   
-  _usuario = relationship('Usuario', back_populates='_grade', lazy='select')
-  _aulas = relationship("Aula", back_populates='_grade', uselist=True, lazy='select')
+  _usuario: Mapped[Usuario] = relationship('Usuario', back_populates='_grade', lazy='select')
+  _aulas: Mapped[List['Aula']] = relationship("Aula", back_populates='_grade', uselist=True, lazy='select')
   
   to_dict = lambda self: to_dict(self)
   from_dict = lambda self, dict: from_dict(self, dict)
@@ -93,13 +94,13 @@ class Grade(BaseModel):
 class Disciplina(BaseModel):
   __tablename__ = 'disciplinas'
   
-  id = Column(Integer,  primary_key=True, autoincrement=True)
-  id_usuario = Column(Integer, ForeignKey(Usuario.id, ondelete='CASCADE'), nullable=False)
-  disciplina = Column(String(50), nullable=False)
+  id: Mapped[int] = mapped_column(Integer,  primary_key=True, autoincrement=True)
+  id_usuario: Mapped[int] = mapped_column(Integer, ForeignKey(Usuario.id, ondelete='CASCADE'), nullable=False)
+  disciplina: Mapped[str] = mapped_column(String(50), nullable=False)
   
-  _usuario = relationship('Usuario', back_populates='_disciplinas', lazy='select')
-  _anotacoes = relationship("Anotacao", back_populates='_disciplina', uselist=True, lazy='select')
-  _aulas = relationship("Aula", back_populates='_disciplina', uselist=True, lazy='select')
+  _usuario: Mapped[Usuario] = relationship('Usuario', back_populates='_disciplinas', lazy='select')
+  _anotacoes: Mapped[List['Anotacao']] = relationship("Anotacao", back_populates='_disciplina', uselist=True, lazy='select', cascade='all, delete-orphan')
+  _aulas: Mapped[List['Aula']] = relationship("Aula", back_populates='_disciplina', uselist=True, lazy='select', cascade='all, delete-orphan')
   
   to_dict = lambda self: to_dict(self)
   from_dict = lambda self, dict: from_dict(self, dict)
@@ -110,13 +111,13 @@ class Disciplina(BaseModel):
 class Anotacao(BaseModel):
   __tablename__ = 'anotacoes'
   
-  id = Column(Integer,  primary_key=True, autoincrement=True)
-  id_disciplina = Column(Integer, ForeignKey(Disciplina.id, ondelete='CASCADE'), nullable=False)
-  aula = Column(Integer, nullable=False)
-  data = Column(DateTime(True), nullable=False)
-  anotacao = Column(Text, nullable=True)
+  id: Mapped[int] = mapped_column(Integer,  primary_key=True, autoincrement=True)
+  id_disciplina: Mapped[int] = mapped_column(Integer, ForeignKey(Disciplina.id, ondelete='CASCADE'), nullable=False)
+  aula: Mapped[int] = mapped_column(Integer, nullable=False)
+  data: Mapped[datetime] = mapped_column(DateTime(True), nullable=False)
+  anotacao: Mapped[str] = mapped_column(Text, nullable=True)
   
-  _disciplina = relationship('Disciplina', back_populates='_anotacoes', lazy='select')
+  _disciplina: Mapped[Disciplina] = relationship('Disciplina', back_populates='_anotacoes', lazy='select')
       
   to_dict = lambda self: to_dict(self)
   from_dict = lambda self, dict: from_dict(self, dict)
@@ -127,14 +128,14 @@ class Anotacao(BaseModel):
 class Aula(BaseModel):
   __tablename__ = 'aulas'
   
-  id = Column(Integer,  primary_key=True, autoincrement=True)
-  id_grade = Column(Integer, ForeignKey(Grade.id, ondelete='CASCADE'), nullable=False)
-  id_disciplina = Column(Integer, ForeignKey(Disciplina.id, ondelete='CASCADE'), nullable=False)
-  aula = Column(Integer, nullable=False)
-  dia = Column(Integer, nullable=False)
+  id: Mapped[int] = mapped_column(Integer,  primary_key=True, autoincrement=True)
+  id_grade: Mapped[int] = mapped_column(Integer, ForeignKey(Grade.id, ondelete='CASCADE'), nullable=False)
+  id_disciplina: Mapped[int] = mapped_column(Integer, ForeignKey(Disciplina.id, ondelete='CASCADE'), nullable=False)
+  aula: Mapped[int] = mapped_column(Integer, nullable=False)
+  dia: Mapped[int] = mapped_column(Integer, nullable=False)
 
-  _grade = relationship("Grade", back_populates='_aulas', uselist=True, lazy='select')
-  _disciplina = relationship("Disciplina", back_populates='_aulas', uselist=True, lazy='select')
+  _grade: Mapped[List['Grade']] = relationship("Grade", back_populates='_aulas', uselist=True, lazy='select')
+  _disciplina: Mapped[List['Disciplina']] = relationship("Disciplina", back_populates='_aulas', uselist=True, lazy='select')
 
   to_dict = lambda self: to_dict(self)
   from_dict = lambda self, dict: from_dict(self, dict)
