@@ -15,13 +15,16 @@ CORS(app_server, headers='Content-Type')
 app_server.config["JWT_SECRET_KEY"] = jwt_secret
 jwt = JWTManager(app_server)
 
-from grade_escolar.controllers import home_controller, usuario_controller, login_controller, disciplina_controller
+from grade_escolar.controllers import home_controller, usuario_controller, login_controller, grade_controller, disciplina_controller, anotacao_controller, aula_controller
 
 controllers = [
     home_controller,
     usuario_controller,
     login_controller,
-    disciplina_controller
+    grade_controller,
+    disciplina_controller,
+    anotacao_controller,
+    aula_controller
 ]
         
 for controller in controllers:
