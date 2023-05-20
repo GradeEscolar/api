@@ -19,7 +19,7 @@ def post():
 @jwt_required()
 def put():
     data = request.get_json()
-    service.upsert(data)
+    service.sinc(data)
     return create_response()
 
 
