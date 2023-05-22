@@ -115,7 +115,7 @@ class Anotacao(BaseModel):
   id_disciplina: Mapped[int] = mapped_column(Integer, ForeignKey(Disciplina.id, ondelete='CASCADE'), nullable=False)
   aula: Mapped[int] = mapped_column(Integer, nullable=False)
   data: Mapped[datetime] = mapped_column(DateTime(True), nullable=False)
-  anotacao: Mapped[str] = mapped_column(Text, nullable=True)
+  anotacao: Mapped[str] = mapped_column(Text, nullable=False)
   
   _disciplina: Mapped[Disciplina] = relationship('Disciplina', back_populates='_anotacoes', lazy='select')
       
