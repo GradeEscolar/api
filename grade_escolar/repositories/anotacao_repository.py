@@ -8,16 +8,16 @@ class AnotacaoRepository:
 
     def upsert(self, anotacao: Anotacao):
         with Session(engine) as session:
-            anotacao_db = session.query(Anotacao).filter(
-                Anotacao.aula == anotacao.aula, Anotacao.id_disciplina == anotacao.id_disciplina, Anotacao.data == anotacao.data
-            ).first()
-
-            if anotacao_db == None:
+            if anotacao.id != None:
+                anotacao_db = session.get(Anotacao, anotacao.id)
+                if anotacao.anotacao != None and anotacao.anotacao != '':
+                    anotacao_db.anotacao = anotacao.anotacao
+                else:
+                    session.delete(anotacao_db)
+                session.commit()
+            elif anotacao.anotacao != None:
                 session.add(anotacao)
-            else:
-                anotacao_db.anotacao = anotacao.anotacao
-
-            session.commit()
+                session.commit()
 
     def read_grade(self, anotacao: Anotacao):
         with Session(engine) as session:
@@ -29,8 +29,10 @@ class AnotacaoRepository:
         with Session(engine) as session:
             return session.query(Anotacao).filter(
                 Anotacao.id_disciplina == anotacao.id_disciplina,
-                extract('month', Anotacao.data) == extract('month', anotacao.data),
-                extract('year', Anotacao.data) == extract('year', anotacao.data)
+                extract('month', Anotacao.data) == extract(
+                    'month', anotacao.data),
+                extract('year', Anotacao.data) == extract(
+                    'year', anotacao.data)
             ).all()
 
     def delete(self, id: int):

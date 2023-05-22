@@ -24,10 +24,7 @@ class DisciplinaService:
         
         if not(self.repository.exists_id(disciplina.id_usuario, disciplina.id)):
             return 'Disciplina não localizada.'
-        
-        if(self.repository.exists_disciplina(disciplina.id_usuario, disciplina.disciplina)):
-            return 'A disciplina informada já existe.'
-        
+                
         self.repository.update(disciplina.id, disciplina.disciplina)
         return None
     
