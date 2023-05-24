@@ -51,7 +51,7 @@ def to_str(obj:T):
   str_values = ', '.join(values)
   return f'{obj.__class__}({str_values})'
     
-engine = create_engine(conn_str, echo=True)
+engine = create_engine(conn_str, echo=False)
   
 class BaseModel(DeclarativeBase):
   pass
