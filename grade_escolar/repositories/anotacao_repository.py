@@ -8,16 +8,21 @@ class AnotacaoRepository:
 
     def upsert(self, anotacao: Anotacao):
         with Session(engine) as session:
+            id_db: int | None = None
             if anotacao.id != None:
                 anotacao_db = session.get(Anotacao, anotacao.id)
                 if anotacao.anotacao != None and anotacao.anotacao != '':
                     anotacao_db.anotacao = anotacao.anotacao
+                    id_db = anotacao_db.id
                 else:
                     session.delete(anotacao_db)
                 session.commit()
-            elif anotacao.anotacao != None:
+                
+            elif anotacao.anotacao != None and anotacao.anotacao != '':
                 session.add(anotacao)
                 session.commit()
+                id_db = anotacao.id
+            return id_db
 
     def read_grade(self, anotacao: Anotacao):
         with Session(engine) as session:
