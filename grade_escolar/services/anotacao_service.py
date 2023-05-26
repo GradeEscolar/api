@@ -10,8 +10,9 @@ class AnotacaoService:
     def upsert(self, data):
         anotacao = Anotacao()
         anotacao.from_dict(data)
-        self.repository.upsert(anotacao)
-        return create_response()
+        id_db = self.repository.upsert(anotacao)
+        anotacao.id = id_db
+        return anotacao.to_dict()
     
     def read(self, data):
         anotacao = Anotacao()

@@ -19,8 +19,7 @@ def post():
 @jwt_required()
 def put():
     data = request.get_json()
-    service.upsert(data)
-    return create_response()
+    return service.upsert(data)
 
 
 @controller.delete('<int:id>')
