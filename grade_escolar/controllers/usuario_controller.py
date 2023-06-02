@@ -4,7 +4,7 @@ from .controllers_util import create_response
 
 # encoding: utf-8
 
-controller = Blueprint('usuario_controller', __name__, url_prefix='/usuario')
+controller = Blueprint('usuario_controller', __name__, url_prefix='/usuarios')
 service = UsuarioService()
 
 @controller.get('')
