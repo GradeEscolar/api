@@ -7,8 +7,8 @@ class GradeService:
         self.repository = GradeRepository()
         
     def read(self, id_usuario:int):
-        grade = self.repository.read(id_usuario)
-        return grade.to_dict()
+        grades = self.repository.read(id_usuario)
+        return [grade.to_dict() for grade in grades]
     
     def update(self, id_usuario:int, data):
         grade = Grade()

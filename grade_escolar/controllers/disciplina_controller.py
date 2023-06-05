@@ -3,13 +3,13 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from grade_escolar.services import DisciplinaService
 from .controllers_util import create_response
 
-controller = Blueprint('disciplina_controller', __name__, url_prefix='/disciplinas')
+controller = Blueprint('disciplina_controller', __name__, url_prefix='/disciplina')
 
 service = DisciplinaService()
 
-@controller.post('')
+@controller.put('')
 @jwt_required()
-def post():
+def put():
     id_usuario = get_jwt_identity()
     data = request.get_json()
     

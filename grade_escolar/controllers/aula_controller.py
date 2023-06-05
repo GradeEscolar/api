@@ -3,7 +3,7 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 from grade_escolar.controllers.controllers_util import create_response
 from grade_escolar.services import AulaService
 
-controller = Blueprint('aula_controller', __name__, url_prefix='/aulas')
+controller = Blueprint('aula_controller', __name__, url_prefix='/aula')
 
 service = AulaService()
 
