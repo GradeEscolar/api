@@ -19,8 +19,8 @@ class AnotacaoService:
         anotacao.from_dict(data)
         modo = data['modo']
         if modo == 'grade':
-            result = self.repository.read_grade(anotacao)
-            return result.to_dict() if result else {}
+            anotacoes = self.repository.read_grade(anotacao)
+            return [anotacao.to_dict() for anotacao in anotacoes]
         else:
             anotacoes = self.repository.read_disciplina(anotacao)
             return [anotacao.to_dict() for anotacao in anotacoes]
