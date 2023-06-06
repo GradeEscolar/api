@@ -7,20 +7,20 @@ controller = Blueprint('disciplina_controller', __name__, url_prefix='/disciplin
 
 service = DisciplinaService()
 
-@controller.get('')
+@controller.put('')
 @jwt_required()
-def get():
-    id_usuario = get_jwt_identity()
-    return jsonify(service.read(id_usuario))
-
-@controller.post('')
-@jwt_required()
-def post():
+def put():
     id_usuario = get_jwt_identity()
     data = request.get_json()
     
     message = service.create(id_usuario, data)
     return create_response() if not(message) else create_response(400, message)
+
+@controller.get('')
+@jwt_required()
+def get():
+    id_usuario = get_jwt_identity()
+    return jsonify(service.read(id_usuario))
 
 @controller.patch('')
 @jwt_required()

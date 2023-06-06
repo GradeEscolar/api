@@ -7,7 +7,7 @@ class GradeRepository:
     
     def read(self, id_usuario: int):
         with Session(engine) as session:
-            return session.query(Grade).filter(Grade.id_usuario == id_usuario).first()
+            return session.query(Grade).filter(Grade.id_usuario == id_usuario).all()
         
     def exists(self, id_usuario: int, id: int):
         with Session(engine) as session:

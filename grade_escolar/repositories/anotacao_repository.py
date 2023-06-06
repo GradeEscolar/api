@@ -28,7 +28,7 @@ class AnotacaoRepository:
         with Session(engine) as session:
             return session.query(Anotacao).filter(
                 Anotacao.aula == anotacao.aula, Anotacao.id_disciplina == anotacao.id_disciplina, Anotacao.data == anotacao.data
-            ).first()
+            ).all()
 
     def read_disciplina(self, anotacao: Anotacao):
         with Session(engine) as session:

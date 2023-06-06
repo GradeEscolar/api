@@ -11,7 +11,7 @@ service = UsuarioService()
 def get():
     return jsonify(service.read())
 
-@controller.post('')
-def post():
+@controller.put('')
+def put():
     data = request.get_json()
     return create_response() if service.create(data) else create_response(409, 'O e-mail informado já está em uso.')
