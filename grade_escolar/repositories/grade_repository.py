@@ -22,8 +22,8 @@ class GradeRepository:
             if d:      
                 d.aulas = grade.aulas
                 d.dias = grade.dias
-                aulas = [aula for aula in d._aulas if aula.aula > grade.aulas or grade.dias.find(str(aula.dia)) == -1]
-                for aula in aulas:
-                    session.delete(aula)
+                # aulas = [aula for aula in d._aulas if aula.aula > grade.aulas or grade.dias.find(str(aula.dia)) == -1]
+                # for aula in aulas:
+                #     session.delete(aula)
                     
                 session.commit()
